@@ -95,4 +95,17 @@ public class WishListService {
         return wishListRepository.listAll().stream()
                 .map(it -> entityToDto(it)).collect(Collectors.toList());
     }
+
+    public void delete(int index) {
+        wishListRepository.deleteById(index);
+    }
+
+    public void addVisit(int index){
+        var wishItem = wishListRepository.findById(index);
+        if (wishItem.isPresent()){
+            var item = wishItem.get();
+            item.setVisit(true);
+            item.setVisitCount(item.getVisitCount() + 1);
+        }
+    }
 }
